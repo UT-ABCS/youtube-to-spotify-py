@@ -54,4 +54,3 @@ For those who want to continue this project you can add additional functionality
 + Add songs to an existing Spotify playlist instead of creating a new one on each run
 + Saving token information between each subsequent run
 + Using a Python library for the Spotify Web API instead of sending HTTP requests
-And anything else you can think of!
