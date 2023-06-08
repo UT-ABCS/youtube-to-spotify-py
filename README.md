@@ -50,7 +50,7 @@ If you found an issue or would like to submit an improvement to this project, pl
 
 ## Potential Future Improvements
 For those who want to continue this project you can add additional functionality to:
-+ Improve the accuracy of searching for each song.
++ Improve the accuracy of searching for each song
 + Add songs to an existing Spotify playlist instead of creating a new one on each run
 + Saving token information between each subsequent run
 + Using a Python library for the Spotify Web API instead of sending HTTP requests

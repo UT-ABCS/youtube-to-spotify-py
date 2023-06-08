@@ -1,8 +1,7 @@
 # Handles the interaction with the YouTube Data API
 
 import os
-import json
-import urllib.parse
+from urllib.parse import quote
 
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
@@ -48,10 +47,6 @@ def get_songs():
         song_info = get_song_info(video["snippet"]["title"])
         songs.append(song_info)
 
-    # Optional prints
-    # print(json.dumps(response, indent=4))
-    # print(response["items"][0]["snippet"]["title"])
-
     return songs
 
 # Given a video title, return the corresponding song information
@@ -62,8 +57,8 @@ def get_songs():
 # }
 def get_song_info(video_title):
     info = video_title.split("-")
-    artist_name = urllib.parse.quote(info[0].strip(), safe = '')
-    song_name = urllib.parse.quote(info[1].strip(), safe = '')
+    artist_name = quote(info[0].strip(), safe = '')
+    song_name = quote(info[1].strip(), safe = '')
 
     return {
         "artist": artist_name,
