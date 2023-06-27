@@ -16,9 +16,20 @@ def update_secret(playlist_id):
     global PLAYLIST_ID
     PLAYLIST_ID = playlist_id
 
-# Look at: https://developers.google.com/youtube/v3/code_samples/code_snippets
-# resource: playlistItems, method: list
 def get_songs():
+    # Obtain the videos from the playlist
+    videos = get_videos_from_playlist()
+
+    # Get the song info of each video in the playlist from its video title
+    songs = []
+    for video in videos["items"]:
+        song_info = extract_song_info(video["snippet"]["title"])
+        songs.append(song_info)
+
+    return songs
+
+# Returns the list of videos from the playlist id specified in the secret.py file
+def get_videos_from_playlist():
     # Disable OAuthlib's HTTPS verification when running locally.
     # *DO NOT* leave this option enabled in production.
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
@@ -35,19 +46,13 @@ def get_songs():
         api_service_name, api_version, credentials=credentials)
 
     request = youtube.playlistItems().list(
-        part="snippet,contentDetails",
+        part="snippet",
         maxResults=25,
         playlistId=PLAYLIST_ID
     )
     response = request.execute()
 
-    # Get the song info of each video in the playlist from its video title
-    songs = []
-    for video in response["items"]:
-        song_info = get_song_info(video["snippet"]["title"])
-        songs.append(song_info)
-
-    return songs
+    return response
 
 # Given a video title, return the corresponding song information
 # e.g. For the video title "Miley Cyrus - Party In The USA", return:
@@ -55,7 +60,7 @@ def get_songs():
 #     artist: "Miley%20Cyrus"
 #     song: "Party%20In%20The%20USA"
 # }
-def get_song_info(video_title):
+def extract_song_info(video_title):
     info = video_title.split("-")
     artist_name = quote(info[0].strip(), safe = '')
     song_name = quote(info[1].strip(), safe = '')

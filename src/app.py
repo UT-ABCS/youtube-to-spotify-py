@@ -10,6 +10,10 @@ def run():
     songs = youtube.get_songs()
     spotify.create_playlist(songs)
 
+    print()
+    print("Playlist created! Check your spotify account.")
+    print()
+
 # Runs the program with an user interface
 def run_interface():
     # Ask for YouTube information
@@ -26,7 +30,7 @@ def run_interface():
     client_id = secret.CLIENT_ID
     client_secret = secret.CLIENT_SECRET
     user_id = secret.USER_ID
-    playlist_info = secret.PLAYLIST_INFO
+    redirect_uri = secret.REDIRECT_URI
 
     print()
     response = input("Enter the Client ID of the Spotify Web App. Leave blank to use the default value ({}). \n".format(client_id))
@@ -41,33 +45,16 @@ def run_interface():
     if(response != ""):
         user_id = response
 
-    print()
-    response = input("Would you like to update playlist information? Leave blank to use the default values. \n")
+    response = input("Enter a redirect uri of the Spotify Web App. Leave blank to use the default value ({}). \n".format(redirect_uri))
     if(response != ""):
-        response = input("Enter the name of your new Playlist. Leave blank to use the default value ({}). \n".format(playlist_info["name"]))
-        if(response != ""):
-            playlist_info["name"] = response
-        
-        response = input("Enter the description of your new Playlist. Leave blank to use the default value ({}). \n".format(playlist_info["description"]))
-        if(response != ""):
-            playlist_info["description"] = response
-        
-        response = input("Would you like your playlist to be public (Y/N)? Leave blank to use the default value ({}). \n".format(playlist_info["public"]))
-        if(response != ""):
-            if(response == "Y"):
-                playlist_info["public"] = True
-            elif(response == "N"):
-                playlist_info["public"] = False
-        
-        response = input("Would you like your playlist to be collaborative (Y/N)? Leave blank to use the default value ({}). \n".format(playlist_info["collaborative"]))
-        if(response != ""):
-            if(response == "Y"):
-                playlist_info["collaborative"] = True
-            elif(response == "N"):
-                playlist_info["collaborative"] = False
+        redirect_uri = response
 
-    spotify.update_secret(client_id, client_secret, user_id, playlist_info)
+    spotify.update_secret(client_id, client_secret, user_id, redirect_uri)
     spotify.create_playlist(songs)
+
+    print()
+    print("Playlist created! Check your spotify account.")
+    print()
 
 if __name__ == "__main__":
     # run()
