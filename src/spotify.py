@@ -9,21 +9,23 @@ import webbrowser
 
 # Create the playlist with the given songs
 def create_playlist(songs):
+    pass
     # Obtain the access token to be able to use Spotify Web API
-    access_token = get_user_permission()
+    # access_token = get_user_permission()
 
     # Find the Spotify tracks closest to the information we got from YouTube
-    track_uris = get_track_uris(songs, access_token)
+    # track_uris = get_track_uris(songs, access_token)
 
     # Create a new playlist on Spotify
-    new_playlist_id = create_new_playlist(access_token)
+    # new_playlist_id = create_new_playlist(access_token)
 
     # Populate the new playlist with the Spotify tracks we found
-    populate_playlist(track_uris, new_playlist_id, access_token)
+    # populate_playlist(track_uris, new_playlist_id, access_token)
 
 # Get permission from the user to make changes to their account by obtaining
 # an authorization token. Follow the Authorization Code Flow. 
 def get_user_permission():
+    """
     # Open a web browser to redirect the user and obtain the authorization code
     query = {
         "client_id": "?",
@@ -35,8 +37,12 @@ def get_user_permission():
     # NOTE: The full version of this URL would look like:
     # https://accounts.spotify.com/authorize?client_id=CLIENT_ID&response_type=code&redirect_uri=REDIRECT_URI&scope=playlist-modify-private
     webbrowser.open("https://accounts.spotify.com/authorize?" + urlencode(query))
-    auth_code = input("After authorizing this application, enter the authorization code: ")
 
+    # Prompt the user to enter the authorization code after being redirected
+    auth_code = input("After authorizing this application, enter the authorization code: ")
+    """
+    
+    """
     # Use the access code to get the access token
     # Make a POST request to the /token endpoint to get an access token
     url = "https://accounts.spotify.com/api/token"
@@ -52,10 +58,13 @@ def get_user_permission():
     }
     response = requests.post(url, data=body, headers=header)
 
-    return response.json()["access_token"]
+    print(response.json()["access_token"])
+    # return response.json()["access_token"]
+    """
 
 # Get the Spotify URI of each track
 def get_track_uris(songs, token):
+    """
     # Obtain the base url for us to insert song information into
     base_url = "https://api.spotify.com/v1/search?q=remaster%2520track%3A{}%2520artist%3A{}&type=track"
 
@@ -73,9 +82,12 @@ def get_track_uris(songs, token):
         uri = response.json()["tracks"]["items"][0]["uri"]
         track_uris.append(uri)
     
-    return track_uris
+    # print(*track_uris, sep = ", ")
+    # return track_uris
+    """
 
 def create_new_playlist(token):
+    """
     # Send a POST request to the /playlist endpoint create the playlist
     url = "https://api.spotify.com/v1/users/{}/playlists".format("?")
     head = {
@@ -90,10 +102,13 @@ def create_new_playlist(token):
     } 
     response = requests.post(url, json=body, headers=head)
 
-    return response.json()["id"]
+    print(response.json()["id"])
+    # return response.json()["id"]
+    """
 
 # Creates a new playlist with the tracks from the given track_uris
 def populate_playlist(track_uris, playlist_id, token):
+    """
     # Send a POST request to add the songs to the playlist
     url = "https://api.spotify.com/v1/playlists/{}/tracks".format("?")
     head = {
@@ -105,3 +120,4 @@ def populate_playlist(track_uris, playlist_id, token):
         "position": 0
     }
     requests.post(url, json=body, headers=head)
+    """
