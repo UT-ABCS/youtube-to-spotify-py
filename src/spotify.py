@@ -5,15 +5,7 @@ import base64
 from urllib.parse import urlencode
 import webbrowser
 
-from secret import CLIENT_ID, CLIENT_SECRET, USER_ID, REDIRECT_URI
-
-# (For the user interface option) Update secret values
-def update_secret(client_id, client_secret, user_id, redirect_uri):
-    global CLIENT_ID, CLIENT_SECRET, USER_ID, REDIRECT_URI
-    CLIENT_ID = client_id
-    CLIENT_SECRET = client_secret
-    USER_ID = user_id
-    REDIRECT_URI = redirect_uri
+# from secret import ?
 
 # Create the playlist with the given songs
 def create_playlist(songs):
@@ -30,17 +22,13 @@ def create_playlist(songs):
     populate_playlist(track_uris, new_playlist_id, access_token)
 
 # Get permission from the user to make changes to their account by obtaining
-# an authorization token. Follow the Authorization Code Flow
-# See more: https://developer.spotify.com/documentation/web-api/tutorials/code-flow
-
-# Adapted from: https://stackoverflow.com/questions/65435932/spotify-api-authorization-code-flow-with-python
-# and: https://python.plainenglish.io/bored-of-libraries-heres-how-to-connect-to-the-spotify-api-using-pure-python-bd31e9e3d88a  
+# an authorization token. Follow the Authorization Code Flow. 
 def get_user_permission():
     # Open a web browser to redirect the user and obtain the authorization code
     query = {
-        "client_id": CLIENT_ID,
+        "client_id": "?",
         "response_type": "code",
-        "redirect_uri": REDIRECT_URI,
+        "redirect_uri": "?",
         "scope": "playlist-modify-private"
     }
 
@@ -52,15 +40,15 @@ def get_user_permission():
     # Use the access code to get the access token
     # Make a POST request to the /token endpoint to get an access token
     url = "https://accounts.spotify.com/api/token"
-    auth_header = base64.urlsafe_b64encode((CLIENT_ID + ':' + CLIENT_SECRET).encode())
+    auth_header = base64.urlsafe_b64encode(("?" + ':' + "?").encode())
     header = {
         "Content-Type": "application/x-www-form-urlencoded",
         "Authorization": "Basic {}".format(auth_header.decode("ascii"))
     }
     body = {
         "grant_type": "authorization_code",
-        "code": auth_code,
-        "redirect_uri": REDIRECT_URI,
+        "code": "?",
+        "redirect_uri": "?",
     }
     response = requests.post(url, data=body, headers=header)
 
@@ -77,7 +65,7 @@ def get_track_uris(songs, token):
         # Send a GET request to the /search endpoint retreive the song info
         url = base_url.format(track["song"], track["artist"])
         header = {
-            "Authorization": "Bearer {}".format(token)
+            "Authorization": "Bearer {}".format("?")
         }
         response = requests.get(url, headers=header)
 
@@ -89,16 +77,16 @@ def get_track_uris(songs, token):
 
 def create_new_playlist(token):
     # Send a POST request to the /playlist endpoint create the playlist
-    url = "https://api.spotify.com/v1/users/{}/playlists".format(USER_ID)
+    url = "https://api.spotify.com/v1/users/{}/playlists".format("?")
     head = {
-        "Authorization": "Bearer {}".format(token), 
+        "Authorization": "Bearer {}".format("?"), 
         "Content-Type": "application/json"
     }
     body = {
-        "name": "My YouTube Playlist",
-        "description": "Playlist created by the tutorial on developer.spotify.com",
-        "public": False,
-        "collaborative": True
+        "name": "?",
+        "description": "?",
+        "public": "?",
+        "collaborative": "?"
     } 
     response = requests.post(url, json=body, headers=head)
 
@@ -107,13 +95,13 @@ def create_new_playlist(token):
 # Creates a new playlist with the tracks from the given track_uris
 def populate_playlist(track_uris, playlist_id, token):
     # Send a POST request to add the songs to the playlist
-    url = "https://api.spotify.com/v1/playlists/{}/tracks".format(playlist_id)
+    url = "https://api.spotify.com/v1/playlists/{}/tracks".format("?")
     head = {
-        "Authorization": "Bearer {}".format(token), 
+        "Authorization": "Bearer {}".format("?"), 
         "Content-Type": "application/json"
     }
     body = {
-        "uris": track_uris,
+        "uris": "?",
         "position": 0
     }
     requests.post(url, json=body, headers=head)
