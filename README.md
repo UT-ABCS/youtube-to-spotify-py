@@ -16,7 +16,7 @@ __Technology Used__
 2. Clone this repository, `cd` into this respository and call `pipenv install`.
 
 ## How to run
-Before running this code, make sure that you have a Google Cloud project and a Spotify Web Application made. If you don't, you can go to the respective links for Google Cloud Developers and Spotify Developers.
+Before running this code, make sure that you have a Google Cloud project and a Spotify Web Application made.
 1. `cd` into this respository
 2. Go to the Google Cloud Console and navigate to your Google Cloud project.
 3. Download the OAuth 2.0 Client ID associated with your Google Cloud project.
@@ -25,12 +25,12 @@ Before running this code, make sure that you have a Google Cloud project and a S
 6. In `secret.py`, add the following code:
 ```
 # For the YouTube Data API
-PLAYLIST_ID = "PLqqrBkAAeqhNGlRf3x2Cp1qDO1Q1MngZK"
+PLAYLIST_ID = "ID OF YOUTUBE PLAYLIST"
 
 # For the Spotify Web API
-CLIENT_ID = "89fa6f2bf40948338b7914fa9c1661dc"
-CLIENT_SECRET = "56c671dd840d460b9e5451a0e76e1e48"
-USER_ID = "31bkyigul7nv7g3jb5uppnruxk3i"
+CLIENT_ID = "SPOTIFY WEB APP CLIENT ID"
+CLIENT_SECRET = "SPOTIFY WEB APP CLIENT SECRET"
+USER_ID = "YOUR SPOTIFY USERNAME"
 
 PLAYLIST_INFO = {
     "name": "My YouTube Playlist",
